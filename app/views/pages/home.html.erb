@@ -1,2 +1,190 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="banner">
+    <div class="container text-center justify-content-center align-middle">
+      <h1 class="font-weight-bold">BOIA REMO OBSERVACIONAL</h1>
+    </div>
+</div>
+<div class="container">
+
+<h2 class="text-center mt-4">ALTURA DE ONDAS</h2>
+<canvas id="myChart0" width="400" height="200"></canvas>
+<h2 class="text-center  mt-4">PERÍODO DAS ONDAS</h2>
+<canvas id="myChart1" width="400" height="200"></canvas>
+<h2 class="text-center  mt-4">VELOCIDADE DO VENTO</h2>
+<canvas id="myChart2" width="400" height="200"></canvas>
+<h2 class="text-center  mt-4">DIREÇÃO DO VENTO</h2>
+<canvas id="myChart3" width="400" height="200"></canvas>
+
+
+
+<script>
+var ctx = document.getElementById("myChart0").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: <%= @values[:timestamp].to_json.html_safe %>,
+        datasets: [{
+            label: '# of Votes',
+            data: <%= @values[:significantwaveheight].to_json.html_safe %>,
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+          display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        }
+    }
+});
+</script>
+
+
+<script>
+var ctx = document.getElementById("myChart1").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: <%= @values[:timestamp].to_json.html_safe %>,
+        datasets: [{
+            label: '# of Votes',
+            data: <%= @values[:peakperiod].to_json.html_safe %>,
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+          display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        }
+    }
+});
+</script>
+
+<script>
+var ctx = document.getElementById("myChart2").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: <%= @values[:timestamp].to_json.html_safe %>,
+        datasets: [{
+            data: <%= @values[:wind_speed].to_json.html_safe %>,
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1,
+        }]
+    },
+    options: {
+        legend: {
+          display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        }
+    }
+});
+</script>
+
+<script>
+var ctx = document.getElementById("myChart3").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: <%= @values[:timestamp].to_json.html_safe %>,
+        datasets: [{
+            label: '# of Votes',
+            data: <%= @values[:wind_direction].to_json.html_safe %>,
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+          display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        }
+    }
+});
+</script>
+
+</div>
+<!--
+  <ul class="list">
+    <% @values[:significantwaveheight].each do |height| %>
+      <li><%= height %></li>
+    <% end %>
+    <% @values[:peakperiod].each do |pico| %>
+      <li><%= pico %></li>
+    <% end %>
+    <% @values[:meanperiod].each do |mean| %>
+      <li><%= mean %></li>
+    <% end %>
+    <% @values[:peakdirection].each do |direction| %>
+      <li><%= direction %></li>
+    <% end %>
+    <% @values[:timestamp].each do |time| %>
+      <li><%= time %></li>
+    <% end %>
+    <% @values[:latitude].each do |lat| %>
+      <li><%= lat %></li>
+    <% end %>
+    <% @values[:longitude].each do |lon| %>
+      <li><%= lon %></li>
+    <% end %>
+    <% @values[:wind_speed].each do |vel| %>
+      <li><%= vel %></li>
+    <% end %>
+    <% @values[:wind_direction].each do |degrees| %>
+      <li><%= degrees %></li>
+    <% end %>
+  </ul> -->
+

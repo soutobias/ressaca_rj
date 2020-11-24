@@ -1,10 +1,8 @@
 
 const initChart = () => {
 	const ctx = document.getElementById("myChart").getContext('2d');
-	const timestamp = document.getElementById("timestamp").textContent;
-  console.log(timestamp)
-	const waveHeigth = document.getElementById("wave").textContent;
-  0 
+  console.log(ctx.data-time)
+
 	if (ctx) {
 		const myChart = new Chart(ctx, {
 		    type: 'line',

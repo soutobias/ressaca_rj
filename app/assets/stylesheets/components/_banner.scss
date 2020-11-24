@@ -1,0 +1,120 @@
+.banner {
+  background-image: url(banner.jpg);
+  background-size: cover;
+  background-position: center;
+  padding: 140px 0;
+  margin: 0;
+  color: rgba(10,10,10,0.9);
+  text-shadow: 2px 2px 20px rgba(200,200,200,0.9);
+  height: 450px;
+
+  h1{
+    font-size: 100px;
+
+  }
+
+  .img-large{
+    width: 120px;
+    height: 120px;
+    padding-top: 10px;
+  }
+}
+
+.typed_wrap {
+  display: block;
+  border: 4px solid #ecf0f1;
+  width: 290px;
+  height: auto;
+  padding: 30px;
+
+  /*centers it in the .banner*/
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  transform: translate(-50%,-50%);
+}
+
+.typed_wrap h1 {
+  display: inline;
+}
+
+/*Add custom cursor so it auto inherits font styles*/
+.typed::after {
+  content: '|';
+  display: inline;
+  -webkit-animation: blink 0.7s infinite;
+  -moz-animation: blink 0.7s infinite;
+  animation: blink 0.7s infinite;
+}
+
+/*Removes cursor that comes with typed.js*/
+.typed-cursor{
+   opacity: 0;
+  display: none;
+}
+
+
+@media (max-width: 960px) {
+  /* For a screen < 960px, this CSS will be read */
+  .container{
+    .h1{
+      font-size: 80px
+    }
+  }
+  .banner {
+    height: 400px;
+    h1{
+      font-size: 100px;
+
+    }
+    .img-large{
+      width: 100px;
+      height: 100px;
+      padding-top: 9px;
+    }
+  }
+}
+@media (max-width: 720px) {
+  .container{
+    .h1{
+      font-size: 60px
+    }
+  }
+  .banner {
+    height: 350px;
+
+    h1{
+      font-size: 55px;
+    }
+    .img-large{
+      width: 80px;
+      height: 80px;
+      padding-top: 6px;
+    }
+  }
+}
+@media (max-width: 540px) {
+  /* For a screen < 540px, this CSS will be read */
+  .container{
+    .h1{
+      font-size: 35px
+    }
+  }
+
+  .banner {
+    height: 300px;
+
+    h1{
+      font-size: 40px;
+    }
+    .img-large{
+      width: 70px;
+      height: 70px;
+      padding-top: 4px;
+    }
+  }
+}
