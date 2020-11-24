@@ -15,6 +15,7 @@ require("channels")
 //
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
+import { initChart } from '../components/init_chart.js';
 
 
 // ----------------------------------------------------
@@ -29,6 +30,7 @@ import "bootstrap";
 // import { initSelect2 } from '../components/init_select2';
 
 document.addEventListener('turbolinks:load', () => {
+	initChart();
   // Call your functions here, e.g:
   // initSelect2();
 });
