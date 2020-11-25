@@ -10,3 +10,11 @@
   width: 50px;
   margin-left: 10px;
 }
+
+@media (max-width: 540px) {
+  /* For a screen < 540px, this CSS will be read */
+	.nav-img{
+	  width: 30px;
+	  margin-left: 5px;
+	}
+}

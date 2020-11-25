@@ -1,5 +1,10 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon d-flex justify-content-left">
-  <%= image_tag "brasao.png", class: "nav-img" %>
-  <%= image_tag "logo-106x106.png", class: "nav-img"  %>
-  <%= image_tag "logo_remo.png", class: "nav-img"  %>
+<div class="navbar navbar-expand-sm navbar-light navbar-lewagon d-flex justify-content-between">
+	<div class="d-flex justify-content-left">
+    <%= image_tag "brasao.png", class: "nav-img" %>
+    <%= image_tag "logo-106x106.png", class: "nav-img"  %>
+    <%= image_tag "logo_remo.png", class: "nav-img"  %>
+  </div>
+  <% if user_signed_in? %>
+    <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-primary" %>
+  <% end %>
 </div>
