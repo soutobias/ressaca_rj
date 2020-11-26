@@ -55,6 +55,10 @@ h2{
   animation: blink 0.7s infinite;
 }
 
+
+.card-value{
+  border-radius: 10px;
+}
 /*Removes cursor that comes with typed.js*/
 .typed-cursor{
    opacity: 0;
