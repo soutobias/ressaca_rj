@@ -1,5 +1,5 @@
 .banner {
-  background-image: url(banner.jpg);
+  // background-image: url(banner.jpg);
   background-size: cover;
   background-position: center;
   padding: 140px 0;
@@ -55,6 +55,10 @@ h2{
   animation: blink 0.7s infinite;
 }
 
+
+.card-value{
+  border-radius: 10px;
+}
 /*Removes cursor that comes with typed.js*/
 .typed-cursor{
    opacity: 0;
