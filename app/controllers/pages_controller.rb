@@ -14,7 +14,7 @@ class PagesController < ApplicationController
 
   def api_spotter
 
-    response = RestClient.get("https://api.sofarocean.com/api/wave-data?spotterId=SPOT-0222&token=#{ENV["SPOTTER_TOKEN"]}&includeWindData=true")
+    response = RestClient.get("https://api.sofarocean.com/api/wave-data?spotterId=SPOT-0746&token=#{ENV["SPOTTER_TOKEN"]}&includeWindData=true&includeSurfaceTempData=true")
     spotter_response = JSON.parse(response)
     significantwaveheight = []
     peakperiod = []
@@ -25,7 +25,8 @@ class PagesController < ApplicationController
     longitude =[]
     wind_speed = []
     wind_direction = []
-
+    water_temperature = []
+    timestamp_water = []
 
     spotter_response["data"]["waves"].each do |item|
       significantwaveheight << item["significantWaveHeight"]
@@ -38,13 +39,20 @@ class PagesController < ApplicationController
       latitude << item["latitude"]
       longitude << item["longitude"]
     end
-
+    
     spotter_response["data"]["wind"].each do |item|
       wind_speed << item["speed"]
       wind_direction << item["direction"]
     end
 
-    response = RestClient.get("https://api.sofarocean.com/api/latest-data?spotterId=SPOT-0222&token=#{ENV["SPOTTER_TOKEN"]}")
+    spotter_response["data"]["surfaceTemp"].each do |item|
+      water_temperature << item["degrees"]
+      x = item["timestamp"]
+      date_time = DateTime.parse x
+      timestamp_water << date_time.strftime("%Y-%m-%d %Hh")
+    end
+
+    response = RestClient.get("https://api.sofarocean.com/api/latest-data?spotterId=SPOT-0746&token=#{ENV["SPOTTER_TOKEN"]}")
     spotter_response = JSON.parse(response)
     
     batteryvoltage = spotter_response["data"]["batteryVoltage"]
@@ -66,6 +74,8 @@ class PagesController < ApplicationController
     params[:batterypower] = batterypower
     params[:solarvoltage] = solarvoltage
     params[:humidity] = humidity
+    params[:water_temperature] = water_temperature
+    params[:timestamp_water] = timestamp_water
     params = params.to_h
   end
   
