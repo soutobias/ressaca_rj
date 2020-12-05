@@ -27,6 +27,7 @@
       <div class="card p-2 align-middle card-value">
         <p>VELOCIDADE DO VENTO: <%= @values[:wind_speed][-1].round(1)%> nós</p>
         <p>DIREÇÃO DO VENTO: <%= @values[:wind_direction][-1].round()%>°</p>
+        <p>TEMPERATURA DA ÁGUA: <%= @values[:water_temperature][-1].round(1)%>°</p>
       </div>
     </div>
     <div class="col-sm-6 col-md-3">
@@ -55,6 +56,8 @@
   <canvas id="myChart2" width="400" height="200"></canvas>
   <h2 class="text-center  mt-4">DIREÇÃO DO VENTO</h2>
   <canvas id="myChart3" class="pb-5" width="400" height="200"></canvas>
+  <h2 class="text-center  mt-4">TEMPERATURA DA ÁGUA</h2>
+  <canvas id="myChart5" class="pb-5" width="400" height="200"></canvas>
   <br>
   <br>
 </div>
@@ -173,6 +176,32 @@ var myChart = new Chart(ctx, {
         datasets: [{
             label: '# of Votes',
             data: <%= @values[:peakdirection].to_json.html_safe %>,
+        }]
+    },
+    options: {
+        legend: {
+          display: false
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:false
+                }
+            }]
+        }
+    }
+});
+</script>
+
+<script>
+var ctx = document.getElementById("myChart5").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: <%= @values[:timestamp_water].to_json.html_safe %>,
+        datasets: [{
+            label: '# of Votes',
+            data: <%= @values[:water_temperature].to_json.html_safe %>,
         }]
     },
     options: {
