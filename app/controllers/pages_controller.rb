@@ -9,8 +9,8 @@ class PagesController < ApplicationController
       }
     ]
     @deploy = {
-      lat: -62.197590,
-      lng: -58.251635
+      lat: -62.209516,
+      lng: -58.28005
     }
   end
 
