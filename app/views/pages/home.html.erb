@@ -8,34 +8,45 @@
 <div class="container">
   <h2 class="text-center mt-4">ÚLTIMOS DADOS</h2>
   <div class="row">
-    <div class="col-sm-6 col-md-3">
+    <div class="col-sm-6 col-md-4">
       <div class="card align-middle p-2 card-value">
         <p>DATA-HORA: <%= @values[:timestamp][-1]%> </p>
-        <p>POSIÇÃO ATUAL: Lat <%= @values[:latitude][-1]%>, Long <%= @values[:longitude][-1]%> </p>
-        <p>POSIÇÃO LANÇAMENTO: Lat <%= @deploy[:lat]%>, Long <%= @deploy[:lng]%> </p>
-
+        <p>POSIÇÃO ATUAL:</p>
+        <p>Lat <%= @markers[0][:lat]%></p>
+        <p>Long <%= @markers[0][:lng]%> </p>
       </div>
     </div>
-    <div class="col-sm-6 col-md-3">
+    <div class="col-sm-6 col-md-4">
+      <div class="card align-middle p-2 card-value">
+        <p>LANÇAMENTO: 05/12/2020 16:00</p>
+        <p>LOCAL DE LANÇAMENTO:</p>
+        <p>Lat <%= @deploy[:lat]%></p>
+        <p>Long <%= @deploy[:lng]%> </p>
+        <% if Haversine.distance(@deploy[:lat], @deploy[:lng], @markers[0][:lat], @markers[0][:lng]).to_km > 1 %>
+          <div class="alert-danger">BOIA FORA DE POSIÇÃO</div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="card align-middle p-2 card-value">
+        <p>VOLTAGEM BATERIA: <%= @values[:batteryvoltage]%> V</p>
+        <p>ENERGIA BATERIA: <%= @values[:batterypower]%> W</p>
+        <p>ENERGIA SOLAR: <%= @values[:solarvoltage]%> V</p>
+        <p>UMIDADE: <%= @values[:humidity]%> %</p>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-6">
       <div class="card p-2  align-middle card-value">
         <p>ALTURA DE ONDA: <%= @values[:significantwaveheight][-1].round(1)%> m</p>
         <p>PERÍODO DAS ONDAS: <%= @values[:peakperiod][-1].round(1)%> s</p>
         <p>DIREÇÃO DAS ONDAS: <%= @values[:peakdirection][-1].round()%>°</p>
       </div>
     </div>
-    <div class="col-sm-6 col-md-3">
+    <div class="col-sm-6 col-md-6">
       <div class="card p-2 align-middle card-value">
         <p>VELOCIDADE DO VENTO: <%= @values[:wind_speed][-1].round(1)%> nós</p>
         <p>DIREÇÃO DO VENTO: <%= @values[:wind_direction][-1].round()%>°</p>
         <p>TEMPERATURA DA ÁGUA: <%= @values[:water_temperature][-1].round(1)%>°</p>
-      </div>
-    </div>
-    <div class="col-sm-6 col-md-3">
-      <div class="card align-middle p-2 card-value">
-        <p>VOLTAGEM BATERIA: <%= @values[:batteryvoltage]%> V</p>
-        <p>ENERGIA BATERIA: <%= @values[:batterypower]%> W</p>
-        <p>ENERGIA SOLAR: <%= @values[:solarvoltage]%> V</p>
-        <p>UMIDADE: <%= @values[:humidity]%> %</p>
       </div>
     </div>
   </div>

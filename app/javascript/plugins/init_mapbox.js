@@ -25,23 +25,46 @@ const initMapbox = () => {
 
     const point = JSON.parse(mapElement.dataset.circle);
 
-    const color = "0xffffff"
-
-    const radius = 500;
-    function Circle(x, y, radius, color) {
-      this.x = x;
-      this.y = y;
-      this.radius = radius;
-
-      this.draw = function () {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-        ctx.strokeStyle = color;
-        ctx.stroke();
+    map.on('load', function(){
+      var center = turf.point([point.lng, point.lat]);
+      var radius = 1;
+      var options = {
+        steps: 80,
+        units: 'kilometers'
       };
-    }
-    new Circle(point.lat, point.lng, radius, color)
 
+      var circle = turf.circle(center, radius, options);
+
+      map.addLayer({
+          "id": "circle-fill",
+          "type": "fill",
+          "source": {
+              "type": "geojson",
+              "data": circle
+          },
+          "paint": {
+              "fill-color": "pink",
+              "fill-opacity": 0
+          }
+      });
+      map.addLayer({
+          "id": "circle-outline",
+          "type": "line",
+          "source": {
+              "type": "geojson",
+              "data": circle
+          },
+          "paint": {
+              "line-color": "blue",
+              "line-opacity": 0.5,
+              "line-width": 3,
+              "line-offset": 5
+          },
+          "layout": {
+
+          }
+      });
+    });
   }
 };
 
