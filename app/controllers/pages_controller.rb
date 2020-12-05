@@ -8,6 +8,10 @@ class PagesController < ApplicationController
         lng: @values[:longitude][-1]
       }
     ]
+    @deploy = {
+      lat: -62.197590,
+      lng: -58.251635
+    }
   end
 
   private
@@ -34,7 +38,7 @@ class PagesController < ApplicationController
       peakdirection << item["peakDirection"]
       x = item["timestamp"]
       date_time = DateTime.parse x
-      timestamp << date_time.strftime("%Y-%m-%d %Hh")
+      timestamp << date_time.strftime("%d-%m %H:%M")
       latitude << item["latitude"]
       longitude << item["longitude"]
     end
@@ -46,7 +50,7 @@ class PagesController < ApplicationController
 
     response = RestClient.get("https://api.sofarocean.com/api/latest-data?spotterId=SPOT-0222&token=#{ENV["SPOTTER_TOKEN"]}")
     spotter_response = JSON.parse(response)
-    
+
     batteryvoltage = spotter_response["data"]["batteryVoltage"]
     batterypower = spotter_response["data"]["batteryPower"]
     solarvoltage = spotter_response["data"]["solarVoltage"]
@@ -68,5 +72,5 @@ class PagesController < ApplicationController
     params[:humidity] = humidity
     params = params.to_h
   end
-  
+
 end

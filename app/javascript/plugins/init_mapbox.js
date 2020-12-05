@@ -1,7 +1,6 @@
 import mapboxgl from 'mapbox-gl';
-
 const initMapbox = () => {
-	
+
 	const fitMapToMarkers = (map, markers) => {
 	  const bounds = new mapboxgl.LngLatBounds();
 	  markers.forEach(marker => bounds.extend([ marker.lng, marker.lat ]));
@@ -23,6 +22,26 @@ const initMapbox = () => {
 		      .addTo(map);
 		  });
 	  fitMapToMarkers(map, markers);
+
+    const point = JSON.parse(mapElement.dataset.circle);
+
+    const color = "0xffffff"
+
+    const radius = 500;
+    function Circle(x, y, radius, color) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+
+      this.draw = function () {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+        ctx.strokeStyle = color;
+        ctx.stroke();
+      };
+    }
+    new Circle(point.lat, point.lng, radius, color)
+
   }
 };
 

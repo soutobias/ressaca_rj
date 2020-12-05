@@ -11,8 +11,9 @@
     <div class="col-sm-6 col-md-3">
       <div class="card align-middle p-2 card-value">
         <p>DATA-HORA: <%= @values[:timestamp][-1]%> </p>
-        <p>LATITUDE: <%= @values[:latitude][-1]%> </p>
-        <p>LONGITUDE: <%= @values[:longitude][-1]%> </p>
+        <p>POSIÇÃO ATUAL: Lat <%= @values[:latitude][-1]%>, Long <%= @values[:longitude][-1]%> </p>
+        <p>POSIÇÃO LANÇAMENTO: Lat <%= @deploy[:lat]%>, Long <%= @deploy[:lng]%> </p>
+
       </div>
     </div>
     <div class="col-sm-6 col-md-3">
@@ -42,13 +43,14 @@
   <div id="map"
        style="width: 100%; height: 600px;"
        data-markers="<%= @markers.to_json %>"
+       data-circle="<%= @deploy.to_json %>"
        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
   <h2 class="text-center mt-4">ALTURA DE ONDAS</h2>
   <canvas id="myChart0" width="400" height="200"></canvas>
   <h2 class="text-center  mt-4">PERÍODO DAS ONDAS</h2>
   <canvas id="myChart1" width="400" height="200"></canvas>
   <h2 class="text-center  mt-4">DIREÇÃO DAS ONDAS</h2>
-  <canvas id="myChart4" width="400" height="200"></canvas>  
+  <canvas id="myChart4" width="400" height="200"></canvas>
   <h2 class="text-center  mt-4">VELOCIDADE DO VENTO</h2>
   <canvas id="myChart2" width="400" height="200"></canvas>
   <h2 class="text-center  mt-4">DIREÇÃO DO VENTO</h2>
