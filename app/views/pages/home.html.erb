@@ -9,26 +9,27 @@
   <h2 class="text-center mt-4">ÚLTIMOS DADOS</h2>
   <div class="row">
     <div class="col-sm-6 col-md-4">
-      <div class="card align-middle p-2 card-value">
+      <div class="card align-middle p-1 card-value text-center">
         <p>DATA-HORA: <%= @values[:timestamp][-1]%> </p>
         <p>POSIÇÃO ATUAL:</p>
         <p>Lat <%= @markers[0][:lat]%></p>
         <p>Long <%= @markers[0][:lng]%> </p>
+        <p>Deriva da boia: <%= Haversine.distance(@deploy[:lat], @deploy[:lng], @markers[-1][:lat], @markers[-1][:lng]).to_nautical_miles.round(2) %> MN</p>
       </div>
     </div>
     <div class="col-sm-6 col-md-4">
-      <div class="card align-middle p-2 card-value">
+      <div class="card align-middle p-1 card-value text-center">
         <p>LANÇAMENTO: 05/12/2020 16:00</p>
         <p>LOCAL DE LANÇAMENTO:</p>
         <p>Lat <%= @deploy[:lat]%></p>
         <p>Long <%= @deploy[:lng]%> </p>
-        <% if Haversine.distance(@deploy[:lat], @deploy[:lng], @markers[0][:lat], @markers[0][:lng]).to_km > 1 %>
+        <% if Haversine.distance(@deploy[:lat], @deploy[:lng], @markers[-1][:lat], @markers[-1][:lng]).to_km > 1 %>
           <div class="alert-danger">BOIA FORA DE POSIÇÃO</div>
         <% end %>
       </div>
     </div>
     <div class="col-sm-6 col-md-4">
-      <div class="card align-middle p-2 card-value">
+      <div class="card align-middle p-1 card-value text-center">
         <p>VOLTAGEM BATERIA: <%= @values[:batteryvoltage]%> V</p>
         <p>ENERGIA BATERIA: <%= @values[:batterypower]%> W</p>
         <p>ENERGIA SOLAR: <%= @values[:solarvoltage]%> V</p>
@@ -36,14 +37,14 @@
       </div>
     </div>
     <div class="col-sm-6 col-md-6">
-      <div class="card p-2  align-middle card-value">
+      <div class="card p-1 align-middle card-value text-center">
         <p>ALTURA DE ONDA: <%= @values[:significantwaveheight][-1].round(1)%> m</p>
         <p>PERÍODO DAS ONDAS: <%= @values[:peakperiod][-1].round(1)%> s</p>
         <p>DIREÇÃO DAS ONDAS: <%= @values[:peakdirection][-1].round()%>°</p>
       </div>
     </div>
     <div class="col-sm-6 col-md-6">
-      <div class="card p-2 align-middle card-value">
+      <div class="card p-1 align-middle card-value text-center">
         <p>VELOCIDADE DO VENTO: <%= @values[:wind_speed][-1].round(1)%> nós</p>
         <p>DIREÇÃO DO VENTO: <%= @values[:wind_direction][-1].round()%>°</p>
         <p>TEMPERATURA DA ÁGUA: <%= @values[:water_temperature][-1].round(1)%>°</p>
