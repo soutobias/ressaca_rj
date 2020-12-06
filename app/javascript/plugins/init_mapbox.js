@@ -4,7 +4,7 @@ const initMapbox = () => {
 	const fitMapToMarkers = (map, markers) => {
 	  const bounds = new mapboxgl.LngLatBounds();
 	  markers.forEach(marker => bounds.extend([ marker.lng, marker.lat ]));
-	  map.fitBounds(bounds, { padding: 70, maxZoom: 15, duration: 0 });
+	  map.fitBounds(bounds, { padding: 70, maxZoom: 11, duration: 0 });
 	};
 
   const mapElement = document.getElementById('map');
@@ -16,11 +16,16 @@ const initMapbox = () => {
       style: 'mapbox://styles/mapbox/streets-v10'
     });
 		const markers = JSON.parse(mapElement.dataset.markers);
-		  markers.forEach((marker) => {
-		    new mapboxgl.Marker()
-		      .setLngLat([ marker.lng, marker.lat ])
-		      .addTo(map);
-		  });
+	  markers.forEach((marker) => {
+	    new mapboxgl.Marker()
+	      .setLngLat([ marker.lng, marker.lat ])
+	      .addTo(map);
+	  });
+    new mapboxgl.Marker({"color": "green"})
+      .setLngLat([ markers[markers.length -1].lng, markers[markers.length -1].lat ])
+      .addTo(map);
+
+
 	  fitMapToMarkers(map, markers);
 
     const point = JSON.parse(mapElement.dataset.circle);

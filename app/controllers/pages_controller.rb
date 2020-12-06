@@ -2,12 +2,12 @@ class PagesController < ApplicationController
 
   def home
     @values = api_spotter
-    @markers = [
-      {
-        lat: @values[:latitude][-1],
-        lng: @values[:longitude][-1]
-      }
-    ]
+
+    @markers = []
+    @values.each_with_index do |marker, idx|
+      @markers << { lat: @values[:latitude][idx], lng: @values[:longitude][idx] }
+    end
+  
     @deploy = {
       lat: -62.209516,
       lng: -58.28005
