@@ -4,8 +4,8 @@ class PagesController < ApplicationController
     @values = api_spotter
 
     @markers = []
-    @values.each_with_index do |marker, idx|
-      @markers << { lat: @values[:latitude][idx], lng: @values[:longitude][idx] }
+    @values[:latitude].each_with_index do |marker, idx|
+      @markers << { lat: @values[:latitude][idx], lng: @values[:longitude][idx], date_time: @values[:timestamp][idx] }
     end
   
     @deploy = {

@@ -19,39 +19,33 @@ const initMapbox = () => {
 	  markers.forEach((marker) => {
 	    new mapboxgl.Marker()
 	      .setLngLat([ marker.lng, marker.lat ])
+        .setPopup(new mapboxgl.Popup().setHTML(`<p>LAT: ${marker.lng}, LON: ${marker.lat}</p>
+          <p>DATA-HORA: ${marker.date_time}</p>`))
 	      .addTo(map);
 	  });
     new mapboxgl.Marker({"color": "green"})
       .setLngLat([ markers[markers.length -1].lng, markers[markers.length -1].lat ])
+      .setPopup(new mapboxgl.Popup().setHTML(`<p>LAT: ${markers[markers.length -1].lng}, LON: ${markers[markers.length -1].lat}</p>
+        <p>DATA-HORA: ${markers[markers.length -1].date_time}</p>`))
       .addTo(map);
 
 
 	  fitMapToMarkers(map, markers);
 
-    const point = JSON.parse(mapElement.dataset.circle);
+          const point = JSON.parse(mapElement.dataset.circle);
 
-    map.on('load', function(){
-      var center = turf.point([point.lng, point.lat]);
+            map.on('load', function(){
+            var center = turf.point([point.lng, point.lat]);
       var radius = 1;
       var options = {
         steps: 80,
         units: 'kilometers'
       };
 
+
+
       var circle = turf.circle(center, radius, options);
 
-      map.addLayer({
-          "id": "circle-fill",
-          "type": "fill",
-          "source": {
-              "type": "geojson",
-              "data": circle
-          },
-          "paint": {
-              "fill-color": "pink",
-              "fill-opacity": 0
-          }
-      });
       map.addLayer({
           "id": "circle-outline",
           "type": "line",
