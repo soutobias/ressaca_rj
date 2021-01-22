@@ -18,7 +18,7 @@ class PagesController < ApplicationController
 
   def api_spotter
 
-    response = RestClient.get("https://api.sofarocean.com/api/wave-data?spotterId=SPOT-0746&token=#{ENV["SPOTTER_TOKEN"]}&includeWindData=true&includeSurfaceTempData=true")
+    response = RestClient.get("https://api.sofarocean.com/api/wave-data?spotterId=SPOT-0746&token=#{ENV["SPOTTER_TOKEN"]}&includeWindData=true&includeSurfaceTempData=true&limit=1000")
     spotter_response = JSON.parse(response)
     significantwaveheight = []
     peakperiod = []

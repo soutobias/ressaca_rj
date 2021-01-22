@@ -17,7 +17,7 @@ const initMapbox = () => {
     });
 		const markers = JSON.parse(mapElement.dataset.markers);
 	  markers.forEach((marker) => {
-	    new mapboxgl.Marker()
+	    new mapboxgl.Marker({"scale": 0.4})
 	      .setLngLat([ marker.lng, marker.lat ])
         .setPopup(new mapboxgl.Popup().setHTML(`<p>LAT: ${marker.lng}, LON: ${marker.lat}</p>
           <p>DATA-HORA: ${marker.date_time}</p>`))
@@ -63,6 +63,29 @@ const initMapbox = () => {
 
           }
       });
+
+      var circle = turf.circle(center, radius, options);
+
+      map.addLayer({
+          "id": "circle-outline",
+          "type": "line",
+          "source": {
+              "type": "geojson",
+              "data": circle
+          },
+          "paint": {
+              "line-color": "blue",
+              "line-opacity": 0.5,
+              "line-width": 3,
+              "line-offset": 5
+          },
+          "layout": {
+
+          }
+      });
+
+
+
     });
   }
 };
