@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     @values[:latitude].each_with_index do |marker, idx|
       @markers << { lat: @values[:latitude][idx], lng: @values[:longitude][idx], date_time: @values[:timestamp][idx] }
     end
-  
+
     @deploy = {
       lat: -62.209516,
       lng: -58.28005
@@ -31,6 +31,7 @@ class PagesController < ApplicationController
     wind_direction = []
     water_temperature = []
     timestamp_water = []
+    timestamp_track =[]
 
     spotter_response["data"]["waves"].each do |item|
       significantwaveheight << item["significantWaveHeight"]
@@ -40,10 +41,8 @@ class PagesController < ApplicationController
       x = item["timestamp"]
       date_time = DateTime.parse x
       timestamp << date_time.strftime("%d-%m %H:%M")
-      latitude << item["latitude"]
-      longitude << item["longitude"]
     end
-    
+
     spotter_response["data"]["wind"].each do |item|
       wind_speed << item["speed"]
       wind_direction << item["direction"]
@@ -64,6 +63,14 @@ class PagesController < ApplicationController
     solarvoltage = spotter_response["data"]["solarVoltage"]
     humidity = spotter_response["data"]["humidity"]
 
+    spotter_response['data']['track'].each do |track|
+      latitude << track["latitude"]
+      longitude << track["longitude"]
+      x = track["timestamp"]
+      date_time = DateTime.parse x
+      timestamp_track << date_time.strftime("%d-%m %H:%M")
+    end
+
     params = {}
     params[:significantwaveheight] = significantwaveheight
     params[:peakperiod] = peakperiod
@@ -80,6 +87,7 @@ class PagesController < ApplicationController
     params[:humidity] = humidity
     params[:water_temperature] = water_temperature
     params[:timestamp_water] = timestamp_water
+    params[:timestamp_track] = timestamp_track
     params = params.to_h
   end
 
