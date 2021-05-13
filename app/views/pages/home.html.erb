@@ -1,6 +1,6 @@
 <div class="banner" style="background-image: url('<%= image_path 'banner.jpg' %>');">
     <div class="container text-center justify-content-center align-middle">
-      <h1 class="font-weight-bold">BOIA REMO OBSERVACIONAL</h1>
+      <h1 class="font-weight-bold">BOIA ONDÓGRAFO</h1>
     </div>
 </div>
 
@@ -23,9 +23,6 @@
         <p>LOCAL DE LANÇAMENTO:</p>
         <p>Lat <%= @deploy[:lat]%></p>
         <p>Long <%= @deploy[:lng]%> </p>
-        <% if Haversine.distance(@deploy[:lat], @deploy[:lng], @markers[-1][:lat], @markers[-1][:lng]).to_km > 1 %>
-          <div class="alert-danger">BOIA FORA DE POSIÇÃO</div>
-        <% end %>
       </div>
     </div>
     <div class="col-sm-6 col-md-4">
@@ -58,6 +55,38 @@
        data-markers="<%= @markers.to_json %>"
        data-circle="<%= @deploy.to_json %>"
        data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
+
+  <h2 class="text-center mt-4">DADOS</h2>
+  <div>
+    <table class="rwd-table">
+      <tr>
+        <th>Datahora</th>
+        <th>Latitude</th>
+        <th>Longitude</th>
+        <th>Altura Significativa(m)</th>
+        <th>Período de Pico(s)</th>
+        <th>Período Médio</th>
+        <th>Direção de Pico</th>
+        <th>Velocidade do Vento(m/s)</th>
+        <th>Direção do Vento</th>
+      </tr>
+      <% @values[:timestamp].each_with_index do |value, idx| %>
+        <% if idx > @values[:timestamp].size - 15 %>
+          <tr>
+            <td data-th="Datahora"><%=@values[:timestamp][idx]%></td>
+            <td data-th="LAT"><%=@values[:latitude][idx] %></td>
+            <td data-th="LONG"><%=@values[:longitude][idx] %></td>
+            <td data-th="Hs(m)"><%=@values[:significantwaveheight][idx] %></td>
+            <td data-th="Tp(s)"><%=@values[:peakperiod][idx] %></td>
+            <td data-th="Tmed(s)"><%=@values[:meanperiod][idx] %></td>
+            <td data-th="DirPeak"><%=@values[:peakdirection][idx] %></td>
+            <td data-th="V_veloc"><%=@values[:wind_speed][idx] %></td>
+            <td data-th="V_dir"><%=@values[:wind_direction][idx] %></td>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>
+  </div>
   <h2 class="text-center mt-4">ALTURA DE ONDAS</h2>
   <canvas id="myChart0" width="400" height="200"></canvas>
   <h2 class="text-center  mt-4">PERÍODO DAS ONDAS</h2>
@@ -73,7 +102,6 @@
   <br>
   <br>
 </div>
-
 
 <script>
 var ctx = document.getElementById("myChart0").getContext('2d');

@@ -2,7 +2,6 @@ class PagesController < ApplicationController
 
   def home
     @values = api_spotter
-
     @markers = []
     @values[:latitude].each_with_index do |marker, idx|
       @markers << { lat: @values[:latitude][idx], lng: @values[:longitude][idx], date_time: @values[:timestamp][idx] }
@@ -18,7 +17,7 @@ class PagesController < ApplicationController
 
   def api_spotter
 
-    response = RestClient.get("https://api.sofarocean.com/api/wave-data?spotterId=SPOT-0746&token=#{ENV["SPOTTER_TOKEN"]}&includeWindData=true&includeSurfaceTempData=true&limit=1000")
+    response = RestClient.get("https://api.sofarocean.com/api/wave-data?spotterId=SPOT-0746&token=#{ENV["SPOTTER_TOKEN"]}&includeWindData=true&includeSurfaceTempData=true&limit=200")
     spotter_response = JSON.parse(response)
     significantwaveheight = []
     peakperiod = []
@@ -38,6 +37,8 @@ class PagesController < ApplicationController
       peakperiod << item["peakPeriod"]
       meanperiod << item["meanPeriod"]
       peakdirection << item["peakDirection"]
+      latitude << item["latitude"]
+      longitude << item["longitude"]
       x = item["timestamp"]
       date_time = DateTime.parse x
       timestamp << date_time.strftime("%d-%m %H:%M")
@@ -62,14 +63,6 @@ class PagesController < ApplicationController
     batterypower = spotter_response["data"]["batteryPower"]
     solarvoltage = spotter_response["data"]["solarVoltage"]
     humidity = spotter_response["data"]["humidity"]
-
-    spotter_response['data']['track'].each do |track|
-      latitude << track["latitude"]
-      longitude << track["longitude"]
-      x = track["timestamp"]
-      date_time = DateTime.parse x
-      timestamp_track << date_time.strftime("%d-%m %H:%M")
-    end
 
     params = {}
     params[:significantwaveheight] = significantwaveheight

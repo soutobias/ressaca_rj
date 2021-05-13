@@ -32,60 +32,15 @@ const initMapbox = () => {
 
 	  fitMapToMarkers(map, markers);
 
-          const point = JSON.parse(mapElement.dataset.circle);
+    const point = JSON.parse(mapElement.dataset.circle);
 
-            map.on('load', function(){
-            var center = turf.point([point.lng, point.lat]);
+    map.on('load', function(){
+      var center = turf.point([point.lng, point.lat]);
       var radius = 1;
       var options = {
         steps: 80,
         units: 'kilometers'
       };
-
-
-
-      var circle = turf.circle(center, radius, options);
-
-      map.addLayer({
-          "id": "circle-outline",
-          "type": "line",
-          "source": {
-              "type": "geojson",
-              "data": circle
-          },
-          "paint": {
-              "line-color": "blue",
-              "line-opacity": 0.5,
-              "line-width": 3,
-              "line-offset": 5
-          },
-          "layout": {
-
-          }
-      });
-
-      var circle = turf.circle(center, radius, options);
-
-      map.addLayer({
-          "id": "circle-outline",
-          "type": "line",
-          "source": {
-              "type": "geojson",
-              "data": circle
-          },
-          "paint": {
-              "line-color": "blue",
-              "line-opacity": 0.5,
-              "line-width": 3,
-              "line-offset": 5
-          },
-          "layout": {
-
-          }
-      });
-
-
-
     });
   }
 };

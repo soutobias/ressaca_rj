@@ -2,8 +2,8 @@ User.destroy_all
 
 u = User.new(
 email: "apoioceanografico@gmail.com",
-username: "oceanochm",
-password: 'marinha1',
+username: "ondas",
+password: 'cogesn',
 )
 u.save!
 
