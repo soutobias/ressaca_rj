@@ -1,0 +1,34 @@
+<div class="banner1">
+  <div class="container text-center justify-content-center align-middle">
+    <h1 class="font-weight-bold">ADMIN</h1>
+  </div>
+</div>
+<div class="m-5">
+  <div class="results row justify-content-around">
+    <div class='col-12 col-md-5 border m-2'>
+      <h2 class='text-center'>BOIAS</h2>
+      <% @buoys.each do |buoy| %>
+        <div class="d-flex">
+          <%= simple_form_for buoy, html: { class: "results d-flex"} do |f| %>
+            <%= f.input :name, 'Nome da boia' %>
+            <%= f.input :buoy_id, 'Identificação da boia no sistema' %>
+            <%= f.input :lat, 'Latitude' %>
+            <%= f.input :lon, 'Longitude' %>
+            <%= f.input :photo, as: :file %>
+            <%= f.button :submit, "ALTERAR BOIA", class: "btn btn-outline-success m-1"%>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class='col-12 col-md-5 border m-2'>
+      <h2 class='text-center'>BANNER</h2>
+      <div class="d-flex">
+        <%= simple_form_for @website, html: { class: "results d-flex"} do |f| %>
+          <%= f.input :title, 'Título do Site' %>
+          <%= f.input :text, 'Informações gerais do site' %>
+          <%= f.input :photo, as: :file %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -10,8 +10,13 @@
 
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload', defer: true %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.1/dist/Chart.min.css">
+    <script src="https://cdn.plot.ly/plotly-2.2.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.1/dist/Chart.min.js"></script>
     <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+    <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.3.min.js" integrity="sha384-dM3QQsP+wXdHg42wTqW85BjZQdLNNIXqlPw/BgKoExPmTG7ZLML4EGqLMfqHT6ON" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        Bokeh.set_log_level("info");
+    </script>
   </head>
 
   <body>

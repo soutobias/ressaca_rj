@@ -16,6 +16,10 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 import { initMapbox } from '../plugins/init_mapbox';
+import { initPlotly } from '../plugins/init_plotly';
+// import { initGif } from '../plugins/init_gif';
+// import { initGifshot } from '../plugins/init_gifshot';
+import { showModel } from '../plugins/show_model';
 
 
 // ----------------------------------------------------
@@ -31,6 +35,8 @@ import "bootstrap";
 
 document.addEventListener('turbolinks:load', () => {
 	initMapbox();
+  initPlotly();
+  showModel();
   // Call your functions here, e.g:
   // initSelect2();
 });

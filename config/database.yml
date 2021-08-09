@@ -83,3 +83,12 @@ production:
   database: spotter_production
   username: spotter
   password: <%= ENV['SPOTTER_DATABASE_PASSWORD'] %>
+
+external: # database you also want to connect to
+  database: oceanobsbrasil
+  adapter: postgresql
+  pool: 5
+  timeout: 5000
+  host: oceanobsbrasil.postgres.uhserver.com
+  username: <%= ENV['oceanobsbrasil_user'] %>
+  password: <%= ENV['oceanobsbrasil_pwd'] %>

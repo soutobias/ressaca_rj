@@ -1,260 +1,123 @@
-<div class="banner" style="background-image: url('<%= image_path 'banner.jpg' %>');">
+<div class="banner" style="background-image: url('<%= cl_image_path @website.photo.key %>');">
     <div class="container text-center justify-content-center align-middle">
-      <h1 class="font-weight-bold">BOIA ONDÓGRAFO</h1>
+      <h1 class="font-weight-bold"><%= @website.title %></h1>
     </div>
 </div>
 
-
-<div class="container">
-  <h2 class="text-center mt-4">ÚLTIMOS DADOS</h2>
-  <div class="row">
-    <div class="col-sm-6 col-md-4">
-      <div class="card align-middle p-1 card-value text-center">
-        <p>DATA-HORA: <%= @values[:timestamp_track][-1]%> </p>
-        <p>POSIÇÃO ATUAL:</p>
-        <p>Lat <%= @markers[0][:lat]%></p>
-        <p>Long <%= @markers[0][:lng]%> </p>
-        <p>Deriva da boia: <%= Haversine.distance(@deploy[:lat], @deploy[:lng], @markers[-1][:lat], @markers[-1][:lng]).to_nautical_miles.round(2) %> MN</p>
+<div class="container pt-3 pb-5">
+  <div class="row pb-2">
+    <% @buoys.each do |buoy| %>
+      <div class="col-sm-4 col-md-4 justify-content-center">
+        <div class="card align-middle p-1 card-value text-center h-100">
+          <h3><%= buoy.name.upcase%></h3>
+          <div class='p-2'><%= cl_image_tag buoy.photo.key, class: 'image-buoy'%></div>
+          <p class='pt-1'>POSIÇÃO: <%=Geo::Coord.new(buoy.lat, buoy.lon).to_s %></p>
+          <% if buoy.name.upcase == 'WKB_RJ4' %>
+            <p>ÚLTIMO DADO: <%= @simcosta_data[:date_time][-2].strftime('%Y/%m/%d %H:%M')%></p>
+            <p>ALTURA ONDAS: <%= @simcosta_data[:swvht][-2].round(1)%> m</p>
+            <p>PERÍODO ONDAS: <%= @simcosta_data[:tp][-2].round(1)%> s</p>
+            <p>DIREÇÃO ONDAS: <%= @simcosta_data[:wvdir][-2].round()%>°</p>
+            <p>SST: <%= @simcosta_data[:sst][-2].round()%> °C</p>
+            <% if @simcosta_data[:wspd][-2] %>
+              <p>VELOCIDADE VENTO: <%= @simcosta_data[:wspd][-2].round()%> m/s</p>
+              <p>DIREÇÃO VENTO: <%= @simcosta_data[:wdir][-2].round()%> °</p>
+              <p>RAJADA: <%= @simcosta_data[:gust][-2].round()%> m/s</p>
+            <% end %>
+          <% elsif buoy.name.upcase == 'WKB_RJ3' %>
+            <p>ÚLTIMO DADO: <%= @spotter_data[:date_time][-2].strftime('%Y/%m/%d %H:%M')%></p>
+            <p>ALTURA ONDAS: <%= @spotter_data[:swvht][-2].round(1)%> m</p>
+            <p>PERÍODO ONDAS: <%= @spotter_data[:tp][-2].round(1)%> s</p>
+            <p>DIREÇÃO ONDAS: <%= @spotter_data[:wvdir][-2].round()%>°</p>
+            <p>SST: <%= @spotter_data[:sst][-2].round()%> °C</p>
+            <% if @spotter_data[:wspd][-2] %>
+              <p>VELOCIDADE VENTO: <%= @spotter_data[:wspd][-2].round()%> m/s</p>
+              <p>DIREÇÃO VENTO: <%= @spotter_data[:wdir][-2].round()%> °</p>
+              <p>RAJADA: <%= @spotter_data[:gust][-2].round()%> m/s</p>
+            <% end %>
+          <% else %>
+            <p>ÚLTIMO DADO: <%= @ezwave_data[:date_time][-1].strftime('%Y/%m/%d %H:%M')%></p>
+            <p>ALTURA ONDAS: <%= @ezwave_data[:swvht][-1].round(1)%> m</p>
+            <p>PERÍODO ONDAS: <%= @ezwave_data[:tp][-1].round(1)%> s</p>
+            <p>DIREÇÃO ONDAS: <%= @ezwave_data[:wvdir][-1].round()%> °</p>
+            <p>SST: <%= @ezwave_data[:sst][-1].round()%> °C</p>
+          <% end %>
+        </div>
       </div>
-    </div>
-    <div class="col-sm-6 col-md-4">
-      <div class="card align-middle p-1 card-value text-center">
-        <p>LANÇAMENTO: 05/12/2020 16:00</p>
-        <p>LOCAL DE LANÇAMENTO:</p>
-        <p>Lat <%= @deploy[:lat]%></p>
-        <p>Long <%= @deploy[:lng]%> </p>
+    <% end %>
+  </div>
+  <div id='model-gif1'>
+    <p class="btn btn-outline-success align-middle h-75 ml-2 button" id="show-model">MOSTRAR MODELOS DE PREVISÃO</p>
+    <div class="row inactive-tab" id="images-models">
+      <div class="col-sm-4 col-md-4 col-6 justify-content-center">
+        <%= image_tag(@images[:image][2], class: "modelimage" ) %>
       </div>
-    </div>
-    <div class="col-sm-6 col-md-4">
-      <div class="card align-middle p-1 card-value text-center">
-        <p>VOLTAGEM BATERIA: <%= @values[:batteryvoltage]%> V</p>
-        <p>ENERGIA BATERIA: <%= @values[:batterypower]%> W</p>
-        <p>ENERGIA SOLAR: <%= @values[:solarvoltage]%> V</p>
-        <p>UMIDADE: <%= @values[:humidity]%> %</p>
+      <div class="col-sm-4 col-md-4 col-6 justify-content-center">
+        <%= image_tag(@images[:image][4], class: "modelimage" ) %>
       </div>
-    </div>
-    <div class="col-sm-6 col-md-6">
-      <div class="card p-1 align-middle card-value text-center">
-        <p>ALTURA DE ONDA: <%= @values[:significantwaveheight][-1].round(1)%> m</p>
-        <p>PERÍODO DAS ONDAS: <%= @values[:peakperiod][-1].round(1)%> s</p>
-        <p>DIREÇÃO DAS ONDAS: <%= @values[:peakdirection][-1].round()%>°</p>
+      <div class="col-sm-4 col-md-4 col-6 justify-content-center">
+        <%= image_tag(@images[:image][6], class: "modelimage" ) %>
       </div>
-    </div>
-    <div class="col-sm-6 col-md-6">
-      <div class="card p-1 align-middle card-value text-center">
-        <p>VELOCIDADE DO VENTO: <%= @values[:wind_speed][-1].round(1)%> nós</p>
-        <p>DIREÇÃO DO VENTO: <%= @values[:wind_direction][-1].round()%>°</p>
-        <p>TEMPERATURA DA ÁGUA: <%= @values[:water_temperature][-1].round(1)%>°</p>
+      <div class="col-sm-4 col-md-4 col-6 justify-content-center">
+        <%= image_tag(@images[:image][8], class: "modelimage" ) %>
+      </div>
+      <div class="col-sm-4 col-md-4 col-6 justify-content-center">
+        <%= image_tag(@images[:image][10], class: "modelimage" ) %>
+      </div>
+      <div class="col-sm-4 col-md-4 col-6 justify-content-center">
+        <%= image_tag(@images[:image][12], class: "modelimage" ) %>
       </div>
     </div>
   </div>
-
-  <h2 class="text-center mt-4">POSIÇÃO</h2>
   <div id="map"
-       style="width: 100%; height: 600px;"
-       data-markers="<%= @markers.to_json %>"
-       data-circle="<%= @deploy.to_json %>"
-       data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>"></div>
-
-  <h2 class="text-center mt-4">DADOS</h2>
-  <div>
-    <table class="rwd-table">
-      <tr>
-        <th>Datahora</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
-        <th>Altura Significativa(m)</th>
-        <th>Período de Pico(s)</th>
-        <th>Período Médio</th>
-        <th>Direção de Pico</th>
-        <th>Velocidade do Vento(m/s)</th>
-        <th>Direção do Vento</th>
-      </tr>
-      <% @values[:timestamp].each_with_index do |value, idx| %>
-        <% if idx > @values[:timestamp].size - 15 %>
-          <tr>
-            <td data-th="Datahora"><%=@values[:timestamp][idx]%></td>
-            <td data-th="LAT"><%=@values[:latitude][idx] %></td>
-            <td data-th="LONG"><%=@values[:longitude][idx] %></td>
-            <td data-th="Hs(m)"><%=@values[:significantwaveheight][idx] %></td>
-            <td data-th="Tp(s)"><%=@values[:peakperiod][idx] %></td>
-            <td data-th="Tmed(s)"><%=@values[:meanperiod][idx] %></td>
-            <td data-th="DirPeak"><%=@values[:peakdirection][idx] %></td>
-            <td data-th="V_veloc"><%=@values[:wind_speed][idx] %></td>
-            <td data-th="V_dir"><%=@values[:wind_direction][idx] %></td>
-          </tr>
-        <% end %>
-      <% end %>
-    </table>
+    style="width: 100%; height: 600px;"
+    data-markers="<%= @buoys.to_json %>"
+    data-simcosta="<%= @simcosta_data.to_json %>"
+    data-spotter="<%= @spotter_data.to_json %>"
+    data-ezwave="<%= @ezwave_data.to_json %>"
+    data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
-  <h2 class="text-center mt-4">ALTURA DE ONDAS</h2>
-  <canvas id="myChart0" width="400" height="200"></canvas>
-  <h2 class="text-center  mt-4">PERÍODO DAS ONDAS</h2>
-  <canvas id="myChart1" width="400" height="200"></canvas>
-  <h2 class="text-center  mt-4">DIREÇÃO DAS ONDAS</h2>
-  <canvas id="myChart4" width="400" height="200"></canvas>
-  <h2 class="text-center  mt-4">VELOCIDADE DO VENTO</h2>
-  <canvas id="myChart2" width="400" height="200"></canvas>
-  <h2 class="text-center  mt-4">DIREÇÃO DO VENTO</h2>
-  <canvas id="myChart3" class="pb-5" width="400" height="200"></canvas>
-  <h2 class="text-center  mt-4">TEMPERATURA DA ÁGUA</h2>
-  <canvas id="myChart5" class="pb-5" width="400" height="200"></canvas>
-  <br>
-  <br>
+  <div id="plotdata"
+    data-simcosta="<%= @simcosta_data.to_json %>"
+    data-spotter="<%= @spotter_data.to_json %>"
+    data-ezwave="<%= @ezwave_data.to_json %>">
+    <div id="wspd-plot" class='graph'>
+    </div>
+    <div id="wdir-plot" class='graph'>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <div id="wdir-plot-simcosta" class='graph'>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-6">
+        <div id="wdir-plot-spotter" class='graph'>
+        </div>
+      </div>
+    </div>
+    <div id="swvht-plot" class='graph'>
+    </div>
+    <div id="wvdir-plot" class='graph'>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-4">
+        <div id="wvdir-plot-simcosta" class='graph'>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <div id="wvdir-plot-spotter" class='graph'>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4">
+        <div id="wvdir-plot-ezwave" class='graph'>
+        </div>
+      </div>
+    </div>
+    <div id="mxwvht-plot" class='graph'>
+    </div>
+    <div id="tp-plot" class='graph'>
+    </div>
+    <div id="sst-plot" class='graph'>
+    </div>
+  </div>
 </div>
 
-<script>
-var ctx = document.getElementById("myChart0").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: <%= @values[:timestamp].to_json.html_safe %>,
-        datasets: [{
-            label: '# of Votes',
-            data: <%= @values[:significantwaveheight].to_json.html_safe %>,
-        }]
-    },
-    options: {
-        legend: {
-          display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:false
-                }
-            }]
-        }
-    }
-});
-</script>
-
-
-<script>
-var ctx = document.getElementById("myChart1").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: <%= @values[:timestamp].to_json.html_safe %>,
-        datasets: [{
-            label: '# of Votes',
-            data: <%= @values[:peakperiod].to_json.html_safe %>,
-        }]
-    },
-    options: {
-        legend: {
-          display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:false
-                }
-            }]
-        }
-    }
-});
-</script>
-
-<script>
-var ctx = document.getElementById("myChart2").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: <%= @values[:timestamp].to_json.html_safe %>,
-        datasets: [{
-            data: <%= @values[:wind_speed].to_json.html_safe %>,
-        }]
-    },
-    options: {
-        legend: {
-          display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:false
-                }
-            }]
-        }
-    }
-});
-</script>
-
-<script>
-var ctx = document.getElementById("myChart3").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: <%= @values[:timestamp].to_json.html_safe %>,
-        datasets: [{
-            label: '# of Votes',
-            data: <%= @values[:wind_direction].to_json.html_safe %>,
-        }]
-    },
-    options: {
-        legend: {
-          display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:false
-                }
-            }]
-        }
-    }
-});
-</script>
-
-<script>
-var ctx = document.getElementById("myChart4").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: <%= @values[:timestamp].to_json.html_safe %>,
-        datasets: [{
-            label: '# of Votes',
-            data: <%= @values[:peakdirection].to_json.html_safe %>,
-        }]
-    },
-    options: {
-        legend: {
-          display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:false
-                }
-            }]
-        }
-    }
-});
-</script>
-
-<script>
-var ctx = document.getElementById("myChart5").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: <%= @values[:timestamp_water].to_json.html_safe %>,
-        datasets: [{
-            label: '# of Votes',
-            data: <%= @values[:water_temperature].to_json.html_safe %>,
-        }]
-    },
-    options: {
-        legend: {
-          display: false
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:false
-                }
-            }]
-        }
-    }
-});
-</script>
