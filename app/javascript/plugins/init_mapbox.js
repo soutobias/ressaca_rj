@@ -29,7 +29,6 @@ const initMapbox = () => {
 
 
     markers.forEach((marker) => {
-      console.log(markers)
       if (marker.name === 'wkb_rj4') {
         var simcosta = document.createElement('div');
         simcosta.className = 'marker';
@@ -39,7 +38,7 @@ const initMapbox = () => {
         simcosta.style.height = '60px';
   	    new mapboxgl.Marker(simcosta)
   	      .setLngLat([ marker.lon, marker.lat ])
-          .setPopup(new mapboxgl.Popup().setHTML(`<p>LAT: ${Math.round(marker.lon*100)/100}, LON: ${Math.round(marker.lat*100)/100}</p>
+          .setPopup(new mapboxgl.Popup().setHTML(`<h2>RJ-4</h2><p>LAT: ${Math.round(marker.lon*100)/100}, LON: ${Math.round(marker.lat*100)/100}</p>
             <p>DATA-HORA: ${simcostaData.date_time[simcostaData.date_time.length -1].slice(0,16)}</p>
             <p>Hsig: ${simcostaData.swvht[simcostaData.date_time.length -1]}</p>
             <p>Vel. Vento: ${simcostaData.wspd[simcostaData.date_time.length -1]}</p>`))
@@ -53,7 +52,7 @@ const initMapbox = () => {
         spotter.style.height = '60px';
         new mapboxgl.Marker(spotter)
           .setLngLat([ marker.lon, marker.lat ])
-          .setPopup(new mapboxgl.Popup().setHTML(`<p>LAT: ${Math.round(marker.lon*100)/100}, LON: ${Math.round(marker.lat*100)/100}</p>
+          .setPopup(new mapboxgl.Popup().setHTML(`<h2>RJ-3</h2><p>LAT: ${Math.round(marker.lon*100)/100}, LON: ${Math.round(marker.lat*100)/100}</p>
             <p>DATA-HORA: ${spotterData.date_time[spotterData.date_time.length -1].slice(0,16)}</p>
             <p>Hsig: ${spotterData.swvht[spotterData.date_time.length -1]}</p>
             <p>Vel. Vento: ${spotterData.wspd[spotterData.date_time.length -1]}</p>`))
@@ -67,7 +66,7 @@ const initMapbox = () => {
         ezwave.style.height = '49px';
         new mapboxgl.Marker(ezwave)
           .setLngLat([ marker.lon, marker.lat ])
-          .setPopup(new mapboxgl.Popup().setHTML(`<p>LAT: ${Math.round(marker.lon*100)/100}, LON: ${Math.round(marker.lat*100)/100}</p>
+          .setPopup(new mapboxgl.Popup().setHTML(`<h2>EZWAVE</h2><p>LAT: ${Math.round(marker.lon*100)/100}, LON: ${Math.round(marker.lat*100)/100}</p>
             <p>DATA-HORA: ${ezwaveData.date_time[ezwaveData.date_time.length -1].slice(0,16)}</p>
             <p>Hsig: ${ezwaveData.swvht[ezwaveData.date_time.length -1]}</p>
             <p>Vel. Vento: ${ezwaveData.wspd[ezwaveData.date_time.length -1]}</p>`))

@@ -34,9 +34,9 @@ import "bootstrap";
 // import { initSelect2 } from '../components/init_select2';
 
 document.addEventListener('turbolinks:load', () => {
+  showModel();
 	initMapbox();
   initPlotly();
-  showModel();
   // Call your functions here, e.g:
   // initSelect2();
 });

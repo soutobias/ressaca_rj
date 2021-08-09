@@ -5,6 +5,9 @@
 </div>
 
 <div class="container pt-3 pb-5">
+  <p class="btn btn-outline-success align-middle h-75 ml-2 button popup" id="show-description" onclick="myFunction()"> MAIS INFORMAÇÕES
+    <span class="popuptext" id="myPopup"><%= @website.word %> </span>
+  </p>
   <div class="row pb-2">
     <% @buoys.each do |buoy| %>
       <div class="col-sm-4 col-md-4 justify-content-center">
@@ -13,40 +16,66 @@
           <div class='p-2'><%= cl_image_tag buoy.photo.key, class: 'image-buoy'%></div>
           <p class='pt-1'>POSIÇÃO: <%=Geo::Coord.new(buoy.lat, buoy.lon).to_s %></p>
           <% if buoy.name.upcase == 'WKB_RJ4' %>
-            <p>ÚLTIMO DADO: <%= @simcosta_data[:date_time][-2].strftime('%Y/%m/%d %H:%M')%></p>
-            <p>ALTURA ONDAS: <%= @simcosta_data[:swvht][-2].round(1)%> m</p>
-            <p>PERÍODO ONDAS: <%= @simcosta_data[:tp][-2].round(1)%> s</p>
-            <p>DIREÇÃO ONDAS: <%= @simcosta_data[:wvdir][-2].round()%>°</p>
-            <p>SST: <%= @simcosta_data[:sst][-2].round()%> °C</p>
-            <% if @simcosta_data[:wspd][-2] %>
-              <p>VELOCIDADE VENTO: <%= @simcosta_data[:wspd][-2].round()%> m/s</p>
-              <p>DIREÇÃO VENTO: <%= @simcosta_data[:wdir][-2].round()%> °</p>
-              <p>RAJADA: <%= @simcosta_data[:gust][-2].round()%> m/s</p>
+            <% if @simcosta_data[:swvht][-3] %>
+              <p>ÚLTIMO DADO: <%= @simcosta_data[:date_time][-3].strftime('%Y/%m/%d %H:%M')%></p>
+              <p>ALTURA ONDAS: <%= @simcosta_data[:swvht][-3].round(1)%> m</p>
+              <p>PERÍODO ONDAS: <%= @simcosta_data[:tp][-3].round(1)%> s</p>
+              <p>DIREÇÃO ONDAS: <%= @simcosta_data[:wvdir][-3].round()%>°</p>
+              <p>SST: <%= @simcosta_data[:sst][-3].round()%> °C</p>
+              <% if @simcosta_data[:wspd][-3] %>
+                <p>VELOCIDADE VENTO: <%= @simcosta_data[:wspd][-3].round()%> m/s</p>
+                <p>DIREÇÃO VENTO: <%= @simcosta_data[:wdir][-3].round()%> °</p>
+                <p>RAJADA: <%= @simcosta_data[:gust][-3].round()%> m/s</p>
+              <% end %>
+            <% else %>
+              <p>ÚLTIMO DADO: <%= @simcosta_data[:date_time][-2].strftime('%Y/%m/%d %H:%M')%></p>
+              <p>ALTURA ONDAS: <%= @simcosta_data[:swvht][-2].round(1)%> m</p>
+              <p>PERÍODO ONDAS: <%= @simcosta_data[:tp][-2].round(1)%> s</p>
+              <p>DIREÇÃO ONDAS: <%= @simcosta_data[:wvdir][-2].round()%>°</p>
+              <p>SST: <%= @simcosta_data[:sst][-2].round()%> °C</p>
+              <% if @simcosta_data[:wspd][-2] %>
+                <p>VELOCIDADE VENTO: <%= @simcosta_data[:wspd][-2].round()%> m/s</p>
+                <p>DIREÇÃO VENTO: <%= @simcosta_data[:wdir][-2].round()%> °</p>
+                <p>RAJADA: <%= @simcosta_data[:gust][-2].round()%> m/s</p>
+              <% end %>
             <% end %>
           <% elsif buoy.name.upcase == 'WKB_RJ3' %>
-            <p>ÚLTIMO DADO: <%= @spotter_data[:date_time][-2].strftime('%Y/%m/%d %H:%M')%></p>
-            <p>ALTURA ONDAS: <%= @spotter_data[:swvht][-2].round(1)%> m</p>
-            <p>PERÍODO ONDAS: <%= @spotter_data[:tp][-2].round(1)%> s</p>
-            <p>DIREÇÃO ONDAS: <%= @spotter_data[:wvdir][-2].round()%>°</p>
-            <p>SST: <%= @spotter_data[:sst][-2].round()%> °C</p>
-            <% if @spotter_data[:wspd][-2] %>
-              <p>VELOCIDADE VENTO: <%= @spotter_data[:wspd][-2].round()%> m/s</p>
-              <p>DIREÇÃO VENTO: <%= @spotter_data[:wdir][-2].round()%> °</p>
-              <p>RAJADA: <%= @spotter_data[:gust][-2].round()%> m/s</p>
+            <% if @spotter_data[:swvht][-3] %>
+              <p>ÚLTIMO DADO: <%= @spotter_data[:date_time][-3].strftime('%Y/%m/%d %H:%M')%></p>
+              <p>ALTURA ONDAS: <%= @spotter_data[:swvht][-3].round(1)%> m</p>
+              <p>PERÍODO ONDAS: <%= @spotter_data[:tp][-3].round(1)%> s</p>
+              <p>DIREÇÃO ONDAS: <%= @spotter_data[:wvdir][-3].round()%>°</p>
+              <p>SST: <%= @spotter_data[:sst][-3].round()%> °C</p>
+              <% if @spotter_data[:wspd][-3] %>
+                <p>VELOCIDADE VENTO: <%= @spotter_data[:wspd][-3].round()%> m/s</p>
+                <p>DIREÇÃO VENTO: <%= @spotter_data[:wdir][-3].round()%> °</p>
+                <p>RAJADA: <%= @spotter_data[:gust][-3].round()%> m/s</p>
+              <% end %>
+            <% else %>
+              <p>ÚLTIMO DADO: <%= @spotter_data[:date_time][-2].strftime('%Y/%m/%d %H:%M')%></p>
+              <p>ALTURA ONDAS: <%= @spotter_data[:swvht][-2].round(1)%> m</p>
+              <p>PERÍODO ONDAS: <%= @spotter_data[:tp][-2].round(1)%> s</p>
+              <p>DIREÇÃO ONDAS: <%= @spotter_data[:wvdir][-2].round()%>°</p>
+              <p>SST: <%= @spotter_data[:sst][-2].round()%> °C</p>
+              <% if @spotter_data[:wspd][-2] %>
+                <p>VELOCIDADE VENTO: <%= @spotter_data[:wspd][-2].round()%> m/s</p>
+                <p>DIREÇÃO VENTO: <%= @spotter_data[:wdir][-2].round()%> °</p>
+                <p>RAJADA: <%= @spotter_data[:gust][-2].round()%> m/s</p>
+              <% end %>
             <% end %>
           <% else %>
-            <p>ÚLTIMO DADO: <%= @ezwave_data[:date_time][-1].strftime('%Y/%m/%d %H:%M')%></p>
-            <p>ALTURA ONDAS: <%= @ezwave_data[:swvht][-1].round(1)%> m</p>
-            <p>PERÍODO ONDAS: <%= @ezwave_data[:tp][-1].round(1)%> s</p>
-            <p>DIREÇÃO ONDAS: <%= @ezwave_data[:wvdir][-1].round()%> °</p>
-            <p>SST: <%= @ezwave_data[:sst][-1].round()%> °C</p>
+            <p>ÚLTIMO DADO: <%= @ezwave_data[:date_time][-2].strftime('%Y/%m/%d %H:%M')%></p>
+            <p>ALTURA ONDAS: <%= @ezwave_data[:swvht][-2].round(1)%> m</p>
+            <p>PERÍODO ONDAS: <%= @ezwave_data[:tp][-2].round(1)%> s</p>
+            <p>DIREÇÃO ONDAS: <%= @ezwave_data[:wvdir][-2].round()%> °</p>
+            <p>SST: <%= @ezwave_data[:sst][-2].round()%> °C</p>
           <% end %>
         </div>
       </div>
     <% end %>
   </div>
   <div id='model-gif1'>
-    <p class="btn btn-outline-success align-middle h-75 ml-2 button" id="show-model">MOSTRAR MODELOS DE PREVISÃO</p>
+    <p class="btn btn-outline-success align-middle button" id="show-model">MOSTRAR MODELOS DE PREVISÃO</p>
     <div class="row inactive-tab" id="images-models">
       <div class="col-sm-4 col-md-4 col-6 justify-content-center">
         <%= image_tag(@images[:image][2], class: "modelimage" ) %>
@@ -76,6 +105,20 @@
     data-ezwave="<%= @ezwave_data.to_json %>"
     data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
+  <h3 class='mt-5'>FILTRAR POR DATA</h3>
+  <%= form_tag root_path, method: :get, class: 'form-horizontal d-flex mt-5' do %>
+    <%= date_field_tag :start_date,
+      params[:start_date],
+      class: "form-control mb-2",
+      placeholder: "Data Inicial"
+    %>
+    <%= date_field_tag :end_date,
+      params[:end_date],
+      class: "form-control mb-2",
+      placeholder: "Data Final"
+    %>
+    <%= submit_tag "Procurar", class: "btn btn-outline-success align-middle button" %>
+  <% end %>
   <div id="plotdata"
     data-simcosta="<%= @simcosta_data.to_json %>"
     data-spotter="<%= @spotter_data.to_json %>"
@@ -121,3 +164,8 @@
   </div>
 </div>
 
+<script>
+function myFunction() {
+  alert("Este teste com equipamentos é proveniente de um acordo de Cooperação entre o Centro de Hidrografia da Marinha e a empresa Petróleo Brasileiro S.A. (PETROBRAS) e de uma parceria do projeto PNBOIA com o projeto SiMCosta. Um agradecimento à PETROBRAS e à Agência Nacional do Petróleo (ANP) por tornarem possíveis os trabalhos de campo, por meio dos Termos de Cooperação SIGITEC 2018/00206-1 e 2018/00207-8.");
+}
+</script>

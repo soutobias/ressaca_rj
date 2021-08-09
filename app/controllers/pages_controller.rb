@@ -10,9 +10,21 @@ class PagesController < ApplicationController
   end
 
   def home
-    start_date = (Time.now - 5.day)
-    end_date = (Time.now + 1.day)
-
+    if params[:commit]
+      start_date = params[:start_date]
+      end_date = params[:end_date]
+      start_date = Date.parse start_date
+      end_date = Date.parse end_date
+    else
+        start_date = (Time.now - 5.day)
+        end_date = (Time.now + 1.day)
+    end
+    if start_date < (Time.now - 5.day)
+      start_date = (Time.now - 5.day)
+    end
+    if end_date < start_date
+      end_date = Time.now + 1.day
+    end
     @website = Website.first
     @spotter = Buoy.where("name = 'wkb_rj3'")[0]
     @ezwave = Buoy.where("name = 'ezwave'")[0]

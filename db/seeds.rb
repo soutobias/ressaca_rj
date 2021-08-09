@@ -70,8 +70,8 @@ w = Website.new(
   title: 'TESTE COM SISTEMA DE ONDAS',
   word: 'Este teste com equipamentos é proveniente de um acordo de Cooperação entre o Centro de Hidrografia da Marinha e a empresa Petróleo Brasileiro S.A. (PETROBRAS) e de uma parceria do projeto PNBOIA com o projeto SiMCosta.
 
-Um agradecimento à PETROBRAS e à Agência Nacional do Petróleo (ANP) por tornarem possíveis os trabalhos de campo, por meio dos Termos de Cooperação SIGITEC 2018/00206-1 e 2018/00207-8.',
-)
+Um agradecimento à PETROBRAS e à Agência Nacional do Petróleo (ANP) por tornarem possíveis os trabalhos de campo, por meio dos Termos de Cooperação SIGITEC 2018/00206-1 e 2018/00207-8.'
+  )
 file = URI.open('app/assets/images/banner.jpg')
 w.photo.attach(io: file, filename: "1.jpg", content_type: 'image/jpg')
 w.save!
